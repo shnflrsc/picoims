@@ -1,6 +1,7 @@
 package io.github.shnflrsc.picoims.model;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.Check;
@@ -11,7 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,8 +28,6 @@ import lombok.Setter;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "product_id")
-    @OneToOne(mappedBy = "product")
     private UUID productId;
 
     @Column(nullable = false, unique = true)
@@ -53,4 +52,7 @@ public class Product {
 
     @Column(name = "deleted_at")
     private Instant deletedAt;
+
+    @OneToMany(mappedBy = "product")
+    private List<Transaction> transactions;
 }
